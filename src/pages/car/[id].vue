@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import axios from 'axios';
-import { useCarStore } from '@/stores/car';
-import type { CarDataResponse } from '@/types/car';
-import { useQuery } from '@tanstack/vue-query';
-import Container from '@/components/Container/Container.vue';
-import Loading from '@/components/Loading/Loading.vue';
-import Markdown from 'vue3-markdown-it';
-
+  import axios from 'axios';
+  import { useCarStore } from '@/stores/car';
+  import type { CarDataResponse } from '@/types/car';
+  import { useQuery } from '@tanstack/vue-query';
+  import Container from '@/components/Container/Container.vue';
+  import Loading from '@/components/Loading/Loading.vue';
+  import Markdown from 'vue3-markdown-it';
+  import { ref } from 'vue';
+  
+  const apiServer = import.meta.env.MODE === 'development' ? 'http://localhost:1337' : 'https://news-homepage-strapi.fly.dev'
   const store = useCarStore();
   const carFromLocalStorage = localStorage.getItem('carId');
   const carId = store.carId || carFromLocalStorage!;  
 
   async function fetchCar (id: string | number): Promise<CarDataResponse> {
-    const data = await axios.get(`http://localhost:1337/api/cars/${id}?populate=*`).then(({ data }) => data.data);    
+    const data = await axios.get(`${apiServer}/api/cars/${id}?populate=*`).then(({ data }) => data.data);    
 
     return data;
   }  
@@ -29,7 +31,18 @@ import Markdown from 'vue3-markdown-it';
     return { data, isLoading, isSuccess }
   }
 
-  const { data: carData, isLoading, isSuccess } = useCar(carId)
+  const { data: carData, isLoading } = useCar(carId) 
+  
+  const imgIsLoaded = ref(false);
+	const img = ref();
+
+	function onImgLoad () {
+		imgIsLoaded.value = true
+
+		if (imgIsLoaded.value === true) {
+			img.value.classList.add('car__img--loaded')
+		}
+	}
 </script>
 
 <template>
@@ -38,11 +51,13 @@ import Markdown from 'vue3-markdown-it';
         <transition name="fade" mode="out-in">
           <Loading v-if="isLoading" key="loading" />          
 
-          <div class="car" v-else-if="isSuccess" key="loaded">
+          <div class="car" v-else-if="carData" key="loaded">
             <img 
+              ref="img"
               class="car__img"
-              :src="`http://localhost:1337${carData?.attributes.picture.data.attributes.url}`" 
-              :alt="carData?.attributes.picture.data.attributes.alternativeText || ''"           
+              :src="carData.attributes.picture.data ? carData.attributes.picture.data.attributes.url : 'https://placehold.co/1920x1080/f15e50/ffffff?text=No+Picture'" 
+              :alt="carData.attributes.picture.data && carData.attributes.picture.data.attributes.alternativeText ? carData.attributes.picture.data.attributes.alternativeText : 'No picture'" 
+              @load="onImgLoad"          
             />
             <h1 class="car__title">{{ `${carData?.attributes.brand} ${carData?.attributes.model}` }}</h1>
             <Markdown class="car__description" :source="carData?.attributes.description" />
@@ -71,7 +86,22 @@ import Markdown from 'vue3-markdown-it';
     }
 
     &__img {
+      aspect-ratio: 16 / 9;
+      background-color: var(--text); 
+      filter: blur(1rem);     
       margin-block-end: 1rem;
+      object-fit: cover;
+      opacity: 0.5;
+      transition: all 0.3s ease-in-out;	
+
+      &[src=""] {        
+        filter: blur(1rem);
+      }
+
+      &--loaded {
+        filter: blur(0);
+        opacity: 1;
+      }
     }
 
     &__description {

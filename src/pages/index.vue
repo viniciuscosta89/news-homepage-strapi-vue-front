@@ -8,24 +8,26 @@
   import TrendingNews from '@/components/TrendingNews'; 
   import Loading from '@/components/Loading/Loading.vue';
 
-  import { type CarDataResponse } from '@/types/car';    
+  import { type CarDataResponse } from '@/types/car';  
+  
+  const apiServer = import.meta.env.DEV ? 'http://localhost:1337' : 'https://news-homepage-strapi.fly.dev'
 
-  async function fetchCars(): Promise<CarDataResponse[]> {
-    const data = await axios.get('http://localhost:1337/api/cars?populate=*').then(({ data }) => data.data);
+  async function fetchCars(): Promise<CarDataResponse[]> {    
+    const data = await axios.get(`${apiServer}/api/cars?populate=*`).then(({ data }) => data.data);
 
     return data;
   }
 
   const useCars = () => {
-    const { isLoading, data, isSuccess } = useQuery(
+    const { isLoading, data } = useQuery(
       ['cars'],
       fetchCars
     )
     
-    return { data, isLoading, isSuccess }
+    return { data, isLoading }
   }
 
-  const { data: carData, isLoading, isSuccess } = useCars()
+  const { data: carData, isLoading } = useCars()
 </script>
 
 <template>
@@ -33,11 +35,11 @@
     <Container>
       <transition name="fade" mode="out-in">
         <Loading key="loading" v-if="isLoading" />  
-        <div class="main-grid" v-else-if="isSuccess" key="loaded">
+        <div class="main-grid" v-else-if="carData" key="loaded">
           <HighlightNews.Root v-for="{ attributes: { picture, brand, model, excerpt }, id } in carData?.slice(0, 1)">
-            <HighlightNews.Image          
-              :url="picture.data.attributes.formats.large.url"
-              :alt="picture.data.attributes.alternativeText || ''"
+            <HighlightNews.Image                  
+              :src="picture.data ? picture.data.attributes.formats.large.url : 'https://placehold.co/1920x1080/f15e50/ffffff?text=No+Picture'"
+              :alt="picture.data && picture.data.attributes.alternativeText ? picture.data.attributes.alternativeText : 'No picture'"
             />
   
             <HighlightNews.Title :title="`${brand} ${model}`" />
@@ -66,8 +68,8 @@
               :link="`${brand}-${model}`"
             >
               <TrendingNews.Image 
-                :src="picture.data.attributes.formats.small.url"
-                :alt="picture.data.attributes.alternativeText || ''"
+                :src="picture.data ? picture.data.attributes.formats.small.url :  'https://placehold.co/720x1280/5d5f79/ffffff?text=No+Picture'"
+                :alt="picture.data && picture.data.attributes.alternativeText ? picture.data.attributes.alternativeText : 'No picture'"
               />
     
               <TrendingNews.Content 

@@ -1,25 +1,83 @@
-# news-homepage-strapi-vue
+# Frontend Mentor - News homepage solution
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a solution to the [News homepage challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/news-homepage-H6SWTa1MFl). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Recommended IDE Setup
+## Table of contents
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-## Type Support for `.vue` Imports in TS
+## Overview
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+### The challenge
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Users should be able to:
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- View the optimal layout for the interface depending on their device's screen size
+- See hover and focus states for all interactive elements on the page
+- Toggle dark mode
+- Access page with details about the article
 
-## Customize configuration
+### Screenshot
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![](./screenshot.jpg)
+
+![](./screenshot-dark-mode.jpg)
+
+### Links
+
+- Solution URL: [https://www.frontendmentor.io/solutions/news-homepage-using-vue-3-and-strapi-OMmoTHLla9](https://www.frontendmentor.io/solutions/news-homepage-using-vue-3-and-strapi-OMmoTHLla9)
+- Live Site URL: [https://news-homepage-strapi-vue-viniciuscosta89.vercel.app](https://news-homepage-strapi-vue-viniciuscosta89.vercel.app)
+
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [Vue](https://vuejs.org) - JS framework
+- [TanStack Query](https://tanstack.com/query/latest/docs/vue/overview) - Powerful asynchronous state management
+- [Pinia](https://pinia.vuejs.org) - The intuitive store for Vue.js
+- [Vue Router](https://router.vuejs.org) - Expressive, configurable and convenient routing for Vue.js
+- [Vite](https://vitejs.dev) - Frontend Tooling
+- [Sass](https://sass-lang.com) - For styles
+- [Typescript](https://www.typescriptlang.org) - JavaScript with syntax for types
+- [Strapi](https://strapi.io) - Headless CMS
+
+### What I learned
+
+I did this challenge to remember/recap my Vue knowledge. It's been years since I worked with Vue 2 and now Vue 3 it's a little different. It was nice to see the differences between Vue 2 and Vue 3. Since I was working with React the last years I found some similiar things between them. I found Pinia way better than Vuex. Vue-router and vue-query are very similar to their React counterparts.
+
+The greatest challenge was align a 3-column row with a 2-column row on home page so they stay horizontally aligned.
+
+I also had an opportunity to work with Strapi as my Headless CMS.
+
+### Continued development
+
+My plan is to get harder challenges to improve my Vue 3 knowledge.
+
+### Useful resources
+
+- [Docker with Strapi V4](https://blog.dehlin.dev/docker-with-strapi-v4) - This helped me with Strapi and how to host it somewhere, along the next link.
+- [Deploy Strapi project on Fly.io](https://forum.strapi.io/t/fly-io-deployment/22438) - I'm a Front-end developer so I have to do a lot of research how to deploy the back-end part from my project.
+- Documentations from Pinia, TanStack Query, Vue, Vite, Vou-Router and Strapi.
+
+## Author
+
+- GitHub - [https://github.com/viniciuscosta89](https://github.com/viniciuscosta89)
+- Frontend Mentor - [@viniciuscosta89](https://www.frontendmentor.io/profile/viniciuscosta89)
 
 ## Project Setup
 
@@ -37,28 +95,6 @@ npm run dev
 
 ```sh
 npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
 ```
 
 ### Lint with [ESLint](https://eslint.org/)

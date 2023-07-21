@@ -8,7 +8,9 @@
   import TrendingNews from '@/components/TrendingNews'; 
   import Loading from '@/components/Loading/Loading.vue';
 
-  import { type CarDataResponse } from '@/types/car';  
+  import { type CarDataResponse } from '@/types/car';
+  
+  document.title = 'News Homepage | Frontend Mentor Challenge';
   
   const apiServer = import.meta.env.DEV ? 'http://localhost:1337' : 'https://news-homepage-strapi.fly.dev'
 

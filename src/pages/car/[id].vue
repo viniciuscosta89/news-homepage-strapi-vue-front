@@ -6,7 +6,7 @@
   import Container from '@/components/Container/Container.vue';
   import Loading from '@/components/Loading/Loading.vue';
   import Markdown from 'vue3-markdown-it';
-  import { ref } from 'vue';
+  import { ref, watchEffect } from 'vue';
   
   const apiServer = import.meta.env.MODE === 'development' ? 'http://localhost:1337' : 'https://news-homepage-strapi.fly.dev'
   const store = useCarStore();
@@ -27,11 +27,15 @@
         enabled: !!id,
       }
     )         
-    
+        
     return { data, isLoading, isSuccess }
   }
 
-  const { data: carData, isLoading } = useCar(carId) 
+  const { data: carData, isLoading } = useCar(carId);
+
+  watchEffect(() => {
+    document.title = `${carData.value?.attributes.brand} ${carData.value?.attributes.model} | Frontend Mentor Challenge`
+  })
   
   const imgIsLoaded = ref(false);
 	const img = ref();
